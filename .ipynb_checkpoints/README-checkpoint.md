@@ -62,10 +62,35 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 * **Initial Churn Rate:** Approximately 26.5% of customers churned.
 * **Data Types:** Mix of numerical and categorical features. Noted a specific issue with `TotalCharges` being an object type despite containing numeric values, requiring conversion and handling of missing entries.
 
-## Next Steps
+## Project Phases
 
-* **Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.
-* **Feature Selection/Engineering:** Explore creating new features or selecting the most important ones.
+### Phase 1: Initial Data Exploration and Cleaning
+* **Objective:** Load the dataset, understand its structure, identify data types, check for missing values, perform initial cleaning.
+* **Key Activities:**
+  * Loaded `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
+  * Inspected data using `df.head()`, `df.info()`, `df.describe()` and `df.isnull().sum()`.
+  * Handled the `TotalCharges` column by converting it to numeric and filling missing values (which were spaces for new customers) with 0.
+  * Dropped the `customerID` column as it is not relevant for prediction.
+  * Mapped the `Churn` target variable from 'Yes/No' to 1/0.
+  * Identified categorical and numerical features.
+  * Performed basic EDA with visualisations (churn distribution, numerical feature distributions, churn vs. categorical features)
+
+### Phase 2: Data Preprocessing and Feature Engineering
+* **Objective:** Transform raw data into a suitable format for machine learning models, including handling categorical variables and scaling numerical ones, and splitting the data for training and testing.
+* **Key Activities:**
+* Separated features (X) and target (y) variables.
+* Identified categorical and numerical features within X.
+* Created a preprocessing pipeline using `ColumnTransformer`:
+  * `StandardScaler` applies to numerical features for normalisation.
+  * `OneHotEncoder` applies to categorical features to convert them into numerical (binary) format.
+* Split the data into training (80%) and testing (20%) sets using `train_test_split`, ensuring stratification on the `Churn` variable to maintain class balance.
+* Applied the `fit_transform` method on the training data and `transform` on the testing data to prevent data leakage.
+* Converted processed NumPy arrays back to Pandas DataFrames for easier inspection.
+
+## Next Steps (Future Work)
+
+* ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
+* ~~**Feature Selection/Engineering:** Explore creating new features or selecting the most important ones.~~
 * **Model Building:** Experiment with various classification algorithms (e.g. Logistic Regression, Decision Trees, Random Forests, Gradient Boosting).
 * **Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).
 * **Hyperparameter Tuning:** Optimise model performance.
