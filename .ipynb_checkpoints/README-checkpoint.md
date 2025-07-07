@@ -87,11 +87,49 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 * Applied the `fit_transform` method on the training data and `transform` on the testing data to prevent data leakage.
 * Converted processed NumPy arrays back to Pandas DataFrames for easier inspection.
 
+### Phase 3: Model Building and Evaluation
+* **Objective:** Train and evaluate multiple classification models to predict customer churn, and compare their initial performance.
+* **Key Activities:**
+* Model Selection: Implemented and evaluated three distinct classification algorithms:
+  * Logistic Regression: A linear model serving as a strong baseline.
+  * Decision Tree Classifier: A non-linear model capable of capturing complex relationships.
+  * Random Forest Classifier: An ensemble method that combines multiple decision trees for improved accuracy and robustness.
+* Model Training: Each model was trained on the preprocessed training data (`X_train_processed_df`, `y_train`).
+* Prediction: Predictions were generated on the unseen test data (`X_train_processed_df`) for each trained model.
+* Performance Evaluation: Each model's performance was rigorously assessed using a suite of classification metrics:
+  * Accuracy: The overall proportion of correct predictions.
+  * Precision: The model's ability to correctly identify positive predictions (minimise false positives).
+  * Recall: The model's ability to find all actual positive instances (minimising false negatives).
+  * F1-Score: The harmonic mean of precision and recall, providing a balanced measure, especially useful in cases of class imbalance.
+* Confusion Matrix Visualisation: A Confusion Matrix was generated and visualised for each model, providing a detailed breakdown of True Positives, True Negatives, False Positives, and False Negatives.
+* Model Comparison: A summary table and bar charts were created to compare the Accuracy, Precision, Recall, and F1-Score of all three models side-by-side, offering insights into their relative strengths and weaknesses for this churn prediction task.
+* **Model Performance Comparison**
+Our primary business objective is to reduce customer attrition, which fundamentally means minimising the rate at which customers discontinue their service. In this context, Recall would be the metric of high importance, since it directly measures our ability to "catch" as many actual churners as possible. Missing a customer who is about to churn (a False Negative) typically incurs a higher financial cost, in the form of lost customer lifetime value, than the cost of a potentially wasted retention effort on a customer who would not have churned (a False Positive). Therefore, while aiming for high recall, we also need to maintain a reasonable Precision to ensure our retention strategies are efficient and not overly wasteful. The F1-Score serves as an excellent composite metric, providing a balanced assessment of both Recall and Precision.
+
+Based on the comprehensive evaluation metrics, the Logistic Regression model demonstrates the most suitable performance for predicting customer churn in this dataset, offering a practical balance for business intervention.
+
+While the Random Forest model showed a competitive Accuracy of 78.64%, the Logistic Regression model achieved a superior F1-Score of 60.40%, which is notably higher than Random Forest's 54.74%. This higher F1-score is crucial for churn prediction as it effectively balances the need to identify actual churners with the goal of minimising unnecessary retention efforts, especially given the inherent class imbalance in churn datasets.
+
+Diving into the specific performance of Logistic Regression:
+- It achieved a Recall of 55.88%, indicating that it successfully identified more than half of the customers who actually churned. This is vital for proactively engaging a significant portion.
+- Its Precision of 65.72% suggests that when the model predicts a customer will churn, it is correct almost two-thirds of the time, thereby minimising wasted resources on customers who were not genuinely at-risk.
+
+The Confusion Matrix for Logistic Regression further illustrates this balance:
+- True Positives (TP): 209 - correctly identified churners.
+- False Positives (FP): 109 - non-churners incorrectly flagged as churners (wasted effort).
+- False Negatives (FN): 165 - actual churners incorrectly missed by the model (lost opportunity).
+- True Negatives (TN): 926 - correctly identified non-churners.
+
+This performance profile makes Logistic Regression a practical and actionable choice for the business, enabling targeted retention strategies that effectively balance the costs of intervention with the imperative of reducing customer attrition.
+
 ## Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
 * ~~**Feature Selection/Engineering:** Explore creating new features or selecting the most important ones.~~
-* **Model Building:** Experiment with various classification algorithms (e.g. Logistic Regression, Decision Trees, Random Forests, Gradient Boosting).
-* **Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).
-* **Hyperparameter Tuning:** Optimise model performance.
-* **Deployment:** Consider deploying a simple predictive interface (e.g. using Streamlit).
+* ~~**Model Building:** Experiment with various classification algorithms (e.g. Logistic Regression, Decision Trees, Random Forests, Gradient Boosting).~~
+* ~~**Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).~~
+* **Hyperparameter Tuning and Cross Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross validation for more robust performance estimates.
+* * **ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.
+* **Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.
+* **Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.
+* **Deployment:** Develop a simple web application (e.g. using Streamlit or Flask) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
