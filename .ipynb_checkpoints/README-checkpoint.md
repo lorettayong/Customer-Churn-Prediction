@@ -189,7 +189,7 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
 * ~~**Model Building:** Experiment with various classification algorithms (e.g. Logistic Regression, Decision Trees, Random Forests, Gradient Boosting).~~
 * ~~**Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).~~
 * ~~**Hyperparameter Tuning and Cross-Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross-validation for more robust performance estimates.~~
-* **ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.
+* ~~**ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.~~
 * **Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.
 * **Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.
 * **Deployment:** Develop a simple web application (e.g. using Streamlit or Flask) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
