@@ -105,6 +105,7 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 * Model Comparison: A summary table and bar charts were created to compare the Accuracy, Precision, Recall, and F1-Score of all three models side-by-side, offering insights into their relative strengths and weaknesses for this churn prediction task.
 
 **Model Performance Comparison**
+
 Our primary business objective is to reduce customer attrition, which fundamentally means minimising the rate at which customers discontinue their service. In this context, Recall would be the metric of high importance, since it directly measures our ability to "catch" as many actual churners as possible. Missing a customer who is about to churn (a False Negative) typically incurs a higher financial cost, in the form of lost customer lifetime value, than the cost of a potentially wasted retention effort on a customer who would not have churned (a False Positive). Therefore, while aiming for high recall, we also need to maintain a reasonable Precision to ensure our retention strategies are efficient and not overly wasteful. The F1-Score serves as an excellent composite metric, providing a balanced assessment of both Recall and Precision.
 
 Based on the comprehensive evaluation metrics, the Logistic Regression model demonstrates the most suitable performance for predicting customer churn in this dataset, offering a practical balance for business intervention.
@@ -158,6 +159,7 @@ This performance profile makes Logistic Regression a practical and actionable ch
 * Impact of tuning: While hyperparameter tuning generally aims for significant performance gains, the improvements across all three models were relatively modest in this case. This suggests that the initial default parameters were already quite robust, or that the inherent predictability within the dataset, given the current features and preprocessing, might be approaching its limit for these specific algorithms. The most notable change was that the Tuned Decision Tree slightly surpassed the Tuned Logistic Regression in F1-Score, indicating a more optimal configuration for balancing precision and recall for this model.
 
 **Model Performance Comparison (After Tuning)**
+
 After comprehensive hyperparameter tuning and cross-validation, we re-evaluated the models to identify the most effective one for our churn prediction objective, maintaining our focus on the F1-Score as the primary metric for balancing Recall and Precision.
 
 Comparing the tuned models, the Tuned Decision Tree emerged as the top performer, achieving an F1-Score of 59.72% on the test set. This represents a slight improvement over its untuned performance (48.36%) and narrowly outperforms the Tuned Logistic Regression (59.54%) and Tuned Random Forest (58.27%).
@@ -197,6 +199,7 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
   * Impact of Applying SMOTE: Applying SMOTE resulted in a significant increase in Recall for the churn class, drastically improving from 56.68% (for the Tuned Decision Tree before SMOTE) to 74.87%. This indicates the model is now much better at identifying actual churners, which aligns strongly with our business objective of minimising lost customers. However, this improvement came with a notable trade-off in Precision, which decreased from 63.10% to 49.38%. This means that the model now produces more false positives of predicting churn for customers who don't actually churn. The F1-Score, a balanced metric, saw a slight decrease from 59.72% to 59.51%. Despite the minor dip in F1-Score and the reduction in Precision, the substantial gain in Recall is considered acceptable given that the primary goal is to proactively identify and intervene with as many potential churners as possible, even if it means a higher rate of "false alarms" for retention efforts since the cost of losing a customer is typically higher than the cost of a potentially unnecessary retention offer.
 
 **Model Performance Conclusion (Final Assessment)**
+
 After comprehensive hyperparameter tuning, cross-validation, and an attempt to address class imbalance, we conducted a final assessment to identify the most effective model for our churn prediction objective. Our primary focus remains on balancing Recall (to catch as many churners as possible) and Precision (to minimise wasted retention efforts), with the F1-Score serving as our key composite metric.
 
 Let's compare the performance of the best-tuned models and the SMOTE-enhanced model:
