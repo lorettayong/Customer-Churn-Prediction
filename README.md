@@ -103,7 +103,8 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
   * F1-Score: The harmonic mean of precision and recall, providing a balanced measure, especially useful in cases of class imbalance.
 * Confusion Matrix Visualisation: A Confusion Matrix was generated and visualised for each model, providing a detailed breakdown of True Positives, True Negatives, False Positives, and False Negatives.
 * Model Comparison: A summary table and bar charts were created to compare the Accuracy, Precision, Recall, and F1-Score of all three models side-by-side, offering insights into their relative strengths and weaknesses for this churn prediction task.
-* **Model Performance Comparison**
+
+**Model Performance Comparison**
 Our primary business objective is to reduce customer attrition, which fundamentally means minimising the rate at which customers discontinue their service. In this context, Recall would be the metric of high importance, since it directly measures our ability to "catch" as many actual churners as possible. Missing a customer who is about to churn (a False Negative) typically incurs a higher financial cost, in the form of lost customer lifetime value, than the cost of a potentially wasted retention effort on a customer who would not have churned (a False Positive). Therefore, while aiming for high recall, we also need to maintain a reasonable Precision to ensure our retention strategies are efficient and not overly wasteful. The F1-Score serves as an excellent composite metric, providing a balanced assessment of both Recall and Precision.
 
 Based on the comprehensive evaluation metrics, the Logistic Regression model demonstrates the most suitable performance for predicting customer churn in this dataset, offering a practical balance for business intervention.
@@ -122,13 +123,58 @@ The Confusion Matrix for Logistic Regression further illustrates this balance:
 
 This performance profile makes Logistic Regression a practical and actionable choice for the business, enabling targeted retention strategies that effectively balance the costs of intervention with the imperative of reducing customer attrition.
 
+### Phase 4: Hyperparameter Tuning and Cross-Validation
+* **Objective:** Improve the performance of the selected models by systematically searching for optimal hyperparameters and obtaining more robust performance estimates through cross-validation.
+* **Key Activities:**
+* Defined a Stratified K-Fold Cross-Validation strategy (`n_split=5`) to ensure balanced class distribution across all folds, which is critical for imbalanced datasets such as churn.
+* Performed a Grid Search Cross-Validation (`GridSearchCV`) for each model (i.e. Logistic Regression, Decision Tree, and Random Forest) to find the best combination of hyperparameters. The optimisation metric used was F1-Score, which aligns with our business objective of balancing precision and recall.
+* Logistic Regression Tuning:
+  * Explored `C` (inverse of regularisation strength) and `solver` parameters.
+  * Best parameters found: {'C': 100, 'solver': 'liblinear'}
+  * Best cross-validation F1-Score: 59.74%
+  * Test set performance:
+    * Accuracy: 80.13%
+    * Precision: 64.78%
+    * Recall: 55.08%
+    * F1-Score: 59.54%
+* Decision Tree Tuning:
+  * Explored `max_depth`, `min_samples_split`, `min_samples_leaf`, and `criterion` parameters.
+  * Best parameters found: {'criterion': 'entropy', 'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 2}
+  * Best cross-validation F1-Score: 57.03%
+  * Test set performance:
+    * Accuracy: 79.70%
+    * Precision: 63.10%
+    * Recall: 56.68%
+    * F1-Score: 59.72%
+* Random Forest Tuning:
+  * Explored `n_estimators`, 'max_depth`, `min_samples_split`, and `min_samples_leaf` parameters.
+  * Best parameters found: {'max_depth': 10, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 100}
+  * Best cross-validation F1-Score: 58.57%
+  * Test set performance:
+    * Accuracy: 80.48%
+    * Precision: 67.37%
+    * Recall: 51.34%
+    * F1-Score: 58.27%
+* Impact of tuning: While hyperparameter tuning generally aims for significant performance gains, the improvements across all three models were relatively modest in this case. This suggests that the initial default parameters were already quite robust, or that the inherent predictability within the dataset, given the current features and preprocessing, might be approaching its limit for these specific algorithms. The most notable change was that the Tuned Decision Tree slightly surpassed the Tuned Logistic Regression in F1-Score, indicating a more optimal configuration for balancing precision and recall for this model.
+
+**Model Performance Comparison (After Tuning)**
+After comprehensive hyperparameter tuning and cross-validation, we re-evaluated the models to identify the most effective one for our churn prediction objective, maintaining our focus on the F1-Score as the primary metric for balancing Recall and Precision.
+
+Comparing the tuned models, the Tuned Decision Tree emerged as the top performer, achieving an F1-Score of 59.72% on the test set. This represents a slight improvement over its untuned performance (48.36%) and narrowly outperforms the Tuned Logistic Regression (59.54%) and Tuned Random Forest (58.27%).
+
+Deliving into the specific performance of the Tuned Decision Tree:
+- It achieved a Recall of 56.68%, indicating a strong ability to identify a significant portion of actual churners.
+- Its Precision of 63.10% suggests that when the model predicts churn, it is correct a solid majority of the time, helping to manage retention campaign costs.
+
+While the improvements from tuning were not dramatic, the Tuned Decision Tree now offers the best balance of identifying at-risk customers (Recall) while maintaining acceptable efficiency in targeting (Precision), making it the most reliable choice for proactive customer retention strategies based on this analysis.
+
 ## Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
 * ~~**Feature Selection/Engineering:** Explore creating new features or selecting the most important ones.~~
 * ~~**Model Building:** Experiment with various classification algorithms (e.g. Logistic Regression, Decision Trees, Random Forests, Gradient Boosting).~~
 * ~~**Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).~~
-* **Hyperparameter Tuning and Cross Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross validation for more robust performance estimates.
+* ~~**Hyperparameter Tuning and Cross-Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross-validation for more robust performance estimates.~~
 * **ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.
 * **Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.
 * **Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.
