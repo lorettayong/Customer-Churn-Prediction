@@ -168,6 +168,20 @@ Deliving into the specific performance of the Tuned Decision Tree:
 
 While the improvements from tuning were not dramatic, the Tuned Decision Tree now offers the best balance of identifying at-risk customers (Recall) while maintaining acceptable efficiency in targeting (Precision), making it the most reliable choice for proactive customer retention strategies based on this analysis.
 
+## Phase 5: ROC Curve and AUC Analysis
+* **Objective:** Gain a deeper understanding of the models' discriminatory power across all possible classification thresholds, especially given the potential class imbalance in churn data.
+* **Key Activities:**
+* Determined the predicted probabilities of the positive class (churn=1) for each tuned model (i.e. Logistic Regression, Decision Tree, and Random Forest).
+* Generated the ROC Curve for each model to plot the True Positive Rate (TPR) against the False Positive Rate (FPR) for various thresholds and calculated AUC Score for each model to compute the Area Under the Curve (AUC).
+* AUC scores of each model:
+  * Logistic Regression: 84.04%
+  * Decision Tree: 83.12%
+  * Random Forest: 83.78%
+* The Tuned Logistic Regression model performed best in terms of AUC, which implies that it has a very strong ability to distinguish between churners and non-churners across different thresholds.
+* Alignment with F1-Scores and Implications: While the Tuned Decision Tree showed the highest F1-Score of 59.72%, the Tuned Logistic Regression achieved the highest AUC of 84.04%. This difference highlights the distinct insights provided by these metrics:
+  - F1-Score is a threshold-dependent metric that indicates performance at a specific operating point, which is typically the default 0.5 probability threshold. The Decision Tree's slightly higher F1-Score suggests it offers the best balance of precision and recall at its default operating point.
+  - On the other hand, AUC is a threshold-independent measure of the model's overall discriminatory power or its ability to rank positive instances higher than negative instances across all possible thresholds. The higher AUC for Logistic Regression indicates that it is generally better at separating the churn and non-churn classes. This means that even if its F1-Score at the default threshold was slightly lower, there might be other thresholds where Logistic Regression could achieve an even better balance of TPR and FPR, or where its overall ranking capability is superior. This further emphasises that no single metric tells the complete story, and understanding both F1-Score (for actionable performance at a specific point) and AUC (for overall discriminatory power) is crucial for robust model evaluation.
+
 ## Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
