@@ -182,6 +182,36 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
   - F1-Score is a threshold-dependent metric that indicates performance at a specific operating point, which is typically the default 0.5 probability threshold. The Decision Tree's slightly higher F1-Score suggests it offers the best balance of precision and recall at its default operating point.
   - On the other hand, AUC is a threshold-independent measure of the model's overall discriminatory power or its ability to rank positive instances higher than negative instances across all possible thresholds. The higher AUC for Logistic Regression indicates that it is generally better at separating the churn and non-churn classes. This means that even if its F1-Score at the default threshold was slightly lower, there might be other thresholds where Logistic Regression could achieve an even better balance of TPR and FPR, or where its overall ranking capability is superior. This further emphasises that no single metric tells the complete story, and understanding both F1-Score (for actionable performance at a specific point) and AUC (for overall discriminatory power) is crucial for robust model evaluation.
 
+## Phase 6: Addressing Class Imbalance
+* **Objective:** Improve the model's ability to correctly identify the minority class (churners) by handling class imbalance in the training data.
+* **Key Activities:**
+  * Applied SMOTE (Synthetic Minority Over-sampling Technique) to the training data to create synthetic samples of the minority class (churners), thereby balancing the class distribution.
+  * Retrained the best-performing model from Phase 4 (the Tuned Decision Tree Classifier) on this SMOTE-resampled training data.
+  * Evaluated the retrained model's performance on the original, untouched test set to ensure an unbiased assessment.
+  * Test Set Performance (Tuned Decision Tree after SMOTE):
+    * Accuracy: 72.96%
+    * Precision: 49.38%
+    * Recall: 74.87%
+    * F1-Score: 59.51%
+    * AUC Score: 81.03%
+  * Impact of Applying SMOTE: Applying SMOTE resulted in a significant increase in Recall for the churn class, drastically improving from 56.68% (for the Tuned Decision Tree before SMOTE) to 74.87%. This indicates the model is now much better at identifying actual churners, which aligns strongly with our business objective of minimising lost customers. However, this improvement came with a notable trade-off in Precision, which decreased from 63.10% to 49.38%. This means that the model now produces more false positives of predicting churn for customers who don't actually churn. The F1-Score, a balanced metric, saw a slight decrease from 59.72% to 59.51%. Despite the minor dip in F1-Score and the reduction in Precision, the substantial gain in Recall is considered acceptable given that the primary goal is to proactively identify and intervene with as many potential churners as possible, even if it means a higher rate of "false alarms" for retention efforts since the cost of losing a customer is typically higher than the cost of a potentially unnecessary retention offer.
+
+**Model Performance Conclusion (Final Assessment)**
+After comprehensive hyperparameter tuning, cross-validation, and an attempt to address class imbalance, we conducted a final assessment to identify the most effective model for our churn prediction objective. Our primary focus remains on balancing Recall (to catch as many churners as possible) and Precision (to minimise wasted retention efforts), with the F1-Score serving as our key composite metric.
+
+Let's compare the performance of the best-tuned models and the SMOTE-enhanced model:
+
+| Model                         | Accuracy | Precision | Recall | F1-Score | AUC    |
+|:------------------------------|:---------|:----------|:-------|:---------|:-------|
+| Logistic Regression (Tuned)   | 80.13%   | 64.78%    | 55.08% | 59.54%   | 84.04% |
+| Decision Tree (Tuned)         | 79.70%   | 63.10%    | 56.68% | 59.72%   | 83.12% |
+| Random Forest (Tuned)         | 80.48%   | 67.37%    | 51.34% | 58.27%   | 83.78% |
+| Decision Tree (Tuned + SMOTE) | 72.96%   | 49.38%    | 74.87% | 59.51%   | 81.03% |
+
+The application of SMOTE to the Tuned Decision Tree model yielded a significant increase in Recall (from 56.68% to 74.87%), making it exceptionally better at identifying actual churners. While this came at the cost of a reduced Precision (from 63.10% to 49.38%) and a slight dip in F1-Score (from 59.72% to 59.51%), this trade-off is acceptable and even desirable given our business objective. Prioritising the identification of churners (high Recall) is crucial to minimise the high cost of lost customers, even if it means a higher volume of retention efforts (more false positives).
+
+Therefore, for this churn prediction task, the Tuned Decision Tree Classifier with SMOTE is considered the most effective model. Its strong Recall ensures that a large proportion of at-risk customers are identified, allowing for proactive intervention, which aligns directly with the goal of reducing customer attrition. Further optimisation could involve exploring different thresholds for this model to find an even more precise balance between Precision and Recall, depending on the specific budget and impact of retention campaigns.
+
 ## Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
@@ -190,6 +220,6 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
 * ~~**Model Evaluation:** Use appropriate metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC) and techniques (Confusion Matrix).~~
 * ~~**Hyperparameter Tuning and Cross-Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross-validation for more robust performance estimates.~~
 * ~~**ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.~~
-* **Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.
+* ~~**Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.~~
 * **Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.
 * **Deployment:** Develop a simple web application (e.g. using Streamlit or Flask) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
