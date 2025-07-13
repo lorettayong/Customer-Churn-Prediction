@@ -216,12 +216,12 @@ The application of SMOTE to the Tuned Decision Tree model yielded a significant 
 Therefore, for this churn prediction task, the Tuned Decision Tree Classifier with SMOTE is considered the most effective model. Its strong Recall ensures that a large proportion of at-risk customers are identified, allowing for proactive intervention, which aligns directly with the goal of reducing customer attrition. Further optimisation could involve exploring different thresholds for this model to find an even more precise balance between Precision and Recall, depending on the specific budget and impact of retention campaigns.
 
 ## Phase 7: Feature Importance Analysis
-* **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifying the key drivers of churn.
+* **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifyin the key drivers of churn.
 * **Key Activities:**
-  * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_' attribute.
+  * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_` attribute.
   * Mapped the processed feature names back to the original, understandable labels.
   * Visualised the top 10 most important features using a bar chart.
-* Top 10 Most Important Features Identified:
+* **Top 10 Most Important Features Identified:**
   1. `Contract_Month-to-month` - Importance: 0.566889
   2. `OnlineSecurity_No` - Importance: 0.106041
   3. `PaymentMethod_Electronic check` - Importance: 0.098924
@@ -235,7 +235,7 @@ Therefore, for this churn prediction task, the Tuned Decision Tree Classifier wi
 
 **Implications for Churn and Actionable Insights**
 
-The feature importance analysis provides critical insights into the underlying reasons for customer churn, which directly informs business strategies:
+The feature importance analysis has provided critical insights into the underlying reasons for customer churn, which would directly inform business strategies:
 
    * Dominant Driver: Contract Type (`Contract_Month-to-month`): This feature is overwhelmingly the most significant predictor of churn. Customers on month-to-month contracts exhibit minimal commitment and are highly susceptible to churn due to perceived lack of value, minor dissatisfaction, or competitive offers.
      * Actionable insight: The top priority for retention should be to convert these customers to longer-term contracts (e.g. one- or two-years) through targeted promotions, bundled services, or loyalty programmes that highlight long-term value and benefits.
