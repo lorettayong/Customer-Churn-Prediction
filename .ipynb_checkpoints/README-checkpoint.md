@@ -215,6 +215,42 @@ The application of SMOTE to the Tuned Decision Tree model yielded a significant 
 
 Therefore, for this churn prediction task, the Tuned Decision Tree Classifier with SMOTE is considered the most effective model. Its strong Recall ensures that a large proportion of at-risk customers are identified, allowing for proactive intervention, which aligns directly with the goal of reducing customer attrition. Further optimisation could involve exploring different thresholds for this model to find an even more precise balance between Precision and Recall, depending on the specific budget and impact of retention campaigns.
 
+## Phase 7: Feature Importance Analysis
+* **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifying the key drivers of churn.
+* **Key Activities:**
+  * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_' attribute.
+  * Mapped the processed feature names back to the original, understandable labels.
+  * Visualised the top 10 most important features using a bar chart.
+* Top 10 Most Important Features Identified:
+  1. `Contract_Month-to-month` - Importance: 0.566889
+  2. `OnlineSecurity_No` - Importance: 0.106041
+  3. `PaymentMethod_Electronic check` - Importance: 0.098924
+  4. `StreamingMovies_Yes` - Importance: 0.052225
+  5. `Contract_One year` - Importance: 0.039045
+  6. `tenure` - Importance: 0.038502
+  7. `OnlineSecurity_Yes` - Importance: 0.020704
+  8. `InternetService_DSL` - Importance: 0.018743
+  9. `TechSupport_No` - Importance: 0.013819
+  10. `MonthlyCharges` - Importance: 0.012164
+
+**Implications for Churn and Actionable Insights**
+
+The feature importance analysis provides critical insights into the underlying reasons for customer churn, which directly informs business strategies:
+
+   * Dominant Driver: Contract Type (`Contract_Month-to-month`): This feature is overwhelmingly the most significant predictor of churn. Customers on month-to-month contracts exhibit minimal commitment and are highly susceptible to churn due to perceived lack of value, minor dissatisfaction, or competitive offers.
+     * Actionable insight: The top priority for retention should be to convert these customers to longer-term contracts (e.g. one- or two-years) through targeted promotions, bundled services, or loyalty programmes that highlight long-term value and benefits.
+    
+   * Security and Payment Vulnerabilities (`OnlineSecurity_No`, `PaymentMethod_Electronic check`): Customers lacking online security services and those using electronic checks are significantly more prone to churn. This suggests either a feeling of vulnerability / lack of stickiness or potential friction points in their billing experience.
+     * Actionable insight: Actively promote the value and benefits of online security features by perhaps offering free trials or bundling them together. For electronic check users, investigate underlying causes of frustrations and encourage migration to more stable and convenient payment methods, such as auto-payment via credit card, with appropriate incentives.
+
+   * Service Engagement and Support Gaps (`StreamingMovies_Yes`, `InternetService_DSL`, `TechSupport_No`): While seemingly engaged, customers who stream movies are also at higher risk, possibly due to high expectations of service quality or competitive offerings. Conversely, those without tech support are more likely to leave, which indicates a need for reliable assistance. DSL internet service, potentially perceived as slower, also contributes to churn risk.
+     * Actionable insight: For streaming users, ensure robust internet performance and consider offering competitive streaming bundles. For customers without tech support, emphasise the availability and effectiveness of support channels for prompt addressing of issues. Evaluate DSL service quality and consider upgrade incentives.
+
+   * Customer Lifecycle and Value Perception (`Contract_One year`, `tenure`, `OnlineSecurity_Yes`, `MonthlyCharges`): Features such as one-year contracts and tenure indicate that customers at different stages of their lifecycle (e.g. nearing contract end, very new, or very old) have varying churn risks. `OnlineSecurity_Yes` acts as a sticky feature, while `MonthlyCharges` still plays a role, likely when perceived value does not match cost.
+     * Actionable insight: Implement lifecycle-based retention strategies, such as proactive retention offers for one-year contracts and personalised engagement for long-term customers. Continue to highlight the value of "sticky" services such as online security. Regularly review pricing structures to ensure competitiveness and perceived value.
+
+These insights provide a clear roadmap for the business to develop targeted strategies and improve customer retention.
+
 ## Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
@@ -224,5 +260,5 @@ Therefore, for this churn prediction task, the Tuned Decision Tree Classifier wi
 * ~~**Hyperparameter Tuning and Cross-Validation:** Optimise model parameters using techniques such as GridSearchCV or RandomizedSearchCV, and employ cross-validation for more robust performance estimates.~~
 * ~~**ROC Curve and AUC Analysis:** Conduct a detailed analysis of Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) to assess model discrimination across various thresholds, which is particularly valuable for imbalanced datasets.~~
 * ~~**Addressing Class Imbalance:** If needed, explore advanced techniques like SMOTE (Synthetic Minority Over-sampling Technique) to balance the training data and potentially improve the model's ability to identify the minority churn class.~~
-* **Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.
+* ~~**Feature Importance Analysis:** Investigate which features are most influential in the models' predictions to gain deeper business insights.~~
 * **Deployment:** Develop a simple web application (e.g. using Streamlit or Flask) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
