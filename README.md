@@ -15,9 +15,12 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 
 # Project Structure
 
-`churn_prediction.ipynb`: Jupyter Notebook containing the data loading, exploratory data analysis (EDA), data preprocessing, model building, and evaluation steps.
-`WA_Fn-UseC_-Telco-Customer-Churn.csv`: The dataset file (downloaded from Kaggle and placed here).
-`requirements.txt`: Lists all the Python libraries and their versions required to run the project.
+- `churn_prediction.ipynb`: Jupyter Notebook containing the data loading, exploratory data analysis (EDA), data preprocessing, model building, and evaluation steps.
+- `WA_Fn-UseC_-Telco-Customer-Churn.csv`: The dataset file (downloaded from Kaggle and placed here).
+- `requirements.txt`: Lists all the Python libraries and their versions required to run the project.
+- `app.py`: The Streamlit web application for interactive predictions.
+- `model_pipeline.joblib`: The saved complete scikit-learn pipeline, encapsulating the preprocessor (`ColumnTransformer` with `StandardScaler` and `OneHotEncoder`) and the trained Tuned Decision Tree Classifier (after SMOTE).
+  
 
 # How to Run the Project
 
@@ -54,6 +57,11 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 6. **Open and Run the Notebook:**
    * In the JupyterLab interface, open `churn-prediction.ipynb`.
    * Run the cells sequentially to see the data loading, exploration, and subsequent steps.
+
+7. **Run the Streamlit Application (Optional):**
+   * Open the Command Line Interface (CLI) with the virtual environment activated.
+   * Navigate to the project's root directory.
+   * Run `streamlit run app.py` to open the interactive churn prediction web application in the browser.
 
 ## Initial Data Overview (from `churn_prediction.ipynb`)
 
@@ -170,7 +178,7 @@ Deliving into the specific performance of the Tuned Decision Tree:
 
 While the improvements from tuning were not dramatic, the Tuned Decision Tree now offers the best balance of identifying at-risk customers (Recall) while maintaining acceptable efficiency in targeting (Precision), making it the most reliable choice for proactive customer retention strategies based on this analysis.
 
-## Phase 5: ROC Curve and AUC Analysis
+### Phase 5: ROC Curve and AUC Analysis
 * **Objective:** Gain a deeper understanding of the models' discriminatory power across all possible classification thresholds, especially given the potential class imbalance in churn data.
 * **Key Activities:**
 * Determined the predicted probabilities of the positive class (churn=1) for each tuned model (i.e. Logistic Regression, Decision Tree, and Random Forest).
@@ -184,7 +192,7 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
   - F1-Score is a threshold-dependent metric that indicates performance at a specific operating point, which is typically the default 0.5 probability threshold. The Decision Tree's slightly higher F1-Score suggests it offers the best balance of precision and recall at its default operating point.
   - On the other hand, AUC is a threshold-independent measure of the model's overall discriminatory power or its ability to rank positive instances higher than negative instances across all possible thresholds. The higher AUC for Logistic Regression indicates that it is generally better at separating the churn and non-churn classes. This means that even if its F1-Score at the default threshold was slightly lower, there might be other thresholds where Logistic Regression could achieve an even better balance of TPR and FPR, or where its overall ranking capability is superior. This further emphasises that no single metric tells the complete story, and understanding both F1-Score (for actionable performance at a specific point) and AUC (for overall discriminatory power) is crucial for robust model evaluation.
 
-## Phase 6: Addressing Class Imbalance
+### Phase 6: Addressing Class Imbalance
 * **Objective:** Improve the model's ability to correctly identify the minority class (churners) by handling class imbalance in the training data.
 * **Key Activities:**
   * Applied SMOTE (Synthetic Minority Over-sampling Technique) to the training data to create synthetic samples of the minority class (churners), thereby balancing the class distribution.
@@ -215,7 +223,7 @@ The application of SMOTE to the Tuned Decision Tree model yielded a significant 
 
 Therefore, for this churn prediction task, the Tuned Decision Tree Classifier with SMOTE is considered the most effective model. Its strong Recall ensures that a large proportion of at-risk customers are identified, allowing for proactive intervention, which aligns directly with the goal of reducing customer attrition. Further optimisation could involve exploring different thresholds for this model to find an even more precise balance between Precision and Recall, depending on the specific budget and impact of retention campaigns.
 
-## Phase 7: Feature Importance Analysis
+### Phase 7: Feature Importance Analysis
 * **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifyin the key drivers of churn.
 * **Key Activities:**
   * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_` attribute.
@@ -250,6 +258,12 @@ The feature importance analysis has provided critical insights into the underlyi
      * Actionable insight: Implement lifecycle-based retention strategies, such as proactive retention offers for one-year contracts and personalised engagement for long-term customers. Continue to highlight the value of "sticky" services such as online security. Regularly review pricing structures to ensure competitiveness and perceived value.
 
 These insights provide a clear roadmap for the business to develop targeted strategies and improve customer retention.
+
+### Phase 8: Model Deployment
+* **Objective:** Develop a simple web application (using Streamlit) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
+* **Key Activities:**
+  * Saved the completed sci-kit learn pipeline (`model_pipeline.job.lib`), which includes the fitted preprocessor (`ColumnTransformer`) and the trained Tuned Decision Tree Classifier (after SMOTE).
+  * Developed `app.py`, a Streamlit application that loads this single `model_pipeline.joblib` file, that provides a user-friendly interface for inputting customer features and receiving real-time churn predictions.
 
 ## Next Steps (Future Work)
 
