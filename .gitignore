@@ -2,3 +2,5 @@ WA_Fn-UseC_-Telco-Customer-Churn.csv
 venv
 *.joblib
 *.pkl
+.ipynb_checkpoints
+.DS_Store
