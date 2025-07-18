@@ -74,13 +74,13 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 ## Phase 1: Initial Data Exploration and Cleaning
 * **Objective:** Load the dataset, understand its structure, identify data types, check for missing values, perform initial cleaning.
 * **Key Activities:**
-  * Loaded `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
-  * Inspected data using `df.head()`, `df.info()`, `df.describe()` and `df.isnull().sum()`.
-  * Handled the `TotalCharges` column by converting it to numeric and filling missing values (which were spaces for new customers) with 0.
-  * Dropped the `customerID` column as it is not relevant for prediction.
-  * Mapped the `Churn` target variable from 'Yes/No' to 1/0.
-  * Identified categorical and numerical features.
-  * Performed basic EDA with visualisations (churn distribution, numerical feature distributions, churn vs. categorical features)
+* Loaded `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
+* Inspected data using `df.head()`, `df.info()`, `df.describe()` and `df.isnull().sum()`.
+* Handled the `TotalCharges` column by converting it to numeric and filling missing values (which were spaces for new customers) with 0.
+* Dropped the `customerID` column as it is not relevant for prediction.
+* Mapped the `Churn` target variable from 'Yes/No' to 1/0.
+* Identified categorical and numerical features.
+* Performed basic EDA with visualisations (churn distribution, numerical feature distributions, churn vs. categorical features)
 
 ## Phase 2: Data Preprocessing and Feature Engineering
 * **Objective:** Transform raw data into a suitable format for machine learning models, including handling categorical variables and scaling numerical ones, and splitting the data for training and testing.
@@ -194,16 +194,16 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
 ## Phase 6: Addressing Class Imbalance
 * **Objective:** Improve the model's ability to correctly identify the minority class (churners) by handling class imbalance in the training data.
 * **Key Activities:**
-  * Applied SMOTE (Synthetic Minority Over-sampling Technique) to the training data to create synthetic samples of the minority class (churners), thereby balancing the class distribution.
-  * Retrained the best-performing model from Phase 4 (the Tuned Decision Tree Classifier) on this SMOTE-resampled training data.
-  * Evaluated the retrained model's performance on the original, untouched test set to ensure an unbiased assessment.
-  * Test Set Performance (Tuned Decision Tree after SMOTE):
-    * Accuracy: 72.96%
-    * Precision: 49.38%
-    * Recall: 74.87%
-    * F1-Score: 59.51%
-    * AUC Score: 81.03%
-  * Impact of Applying SMOTE: Applying SMOTE resulted in a significant increase in Recall for the churn class, drastically improving from 56.68% (for the Tuned Decision Tree before SMOTE) to 74.87%. This indicates the model is now much better at identifying actual churners, which aligns strongly with our business objective of minimising lost customers. However, this improvement came with a notable trade-off in Precision, which decreased from 63.10% to 49.38%. This means that the model now produces more false positives of predicting churn for customers who don't actually churn. The F1-Score, a balanced metric, saw a slight decrease from 59.72% to 59.51%. Despite the minor dip in F1-Score and the reduction in Precision, the substantial gain in Recall is considered acceptable given that the primary goal is to proactively identify and intervene with as many potential churners as possible, even if it means a higher rate of "false alarms" for retention efforts since the cost of losing a customer is typically higher than the cost of a potentially unnecessary retention offer.
+* Applied SMOTE (Synthetic Minority Over-sampling Technique) to the training data to create synthetic samples of the minority class (churners), thereby balancing the class distribution.
+* Retrained the best-performing model from Phase 4 (the Tuned Decision Tree Classifier) on this SMOTE-resampled training data.
+* Evaluated the retrained model's performance on the original, untouched test set to ensure an unbiased assessment.
+* Test Set Performance (Tuned Decision Tree after SMOTE):
+  * Accuracy: 72.96%
+  * Precision: 49.38%
+  * Recall: 74.87%
+  * F1-Score: 59.51%
+  * AUC Score: 81.03%
+* Impact of Applying SMOTE: Applying SMOTE resulted in a significant increase in Recall for the churn class, drastically improving from 56.68% (for the Tuned Decision Tree before SMOTE) to 74.87%. This indicates the model is now much better at identifying actual churners, which aligns strongly with our business objective of minimising lost customers. However, this improvement came with a notable trade-off in Precision, which decreased from 63.10% to 49.38%. This means that the model now produces more false positives of predicting churn for customers who don't actually churn. The F1-Score, a balanced metric, saw a slight decrease from 59.72% to 59.51%. Despite the minor dip in F1-Score and the reduction in Precision, the substantial gain in Recall is considered acceptable given that the primary goal is to proactively identify and intervene with as many potential churners as possible, even if it means a higher rate of "false alarms" for retention efforts since the cost of losing a customer is typically higher than the cost of a potentially unnecessary retention offer.
 
 ### Model Performance Conclusion (Final Assessment)
 
@@ -225,9 +225,9 @@ Therefore, for this churn prediction task, the Tuned Decision Tree Classifier wi
 ## Phase 7: Feature Importance Analysis
 * **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifyin the key drivers of churn.
 * **Key Activities:**
-  * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_` attribute.
-  * Mapped the processed feature names back to the original, understandable labels.
-  * Visualised the top 10 most important features using a bar chart.
+* Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_` attribute.
+* Mapped the processed feature names back to the original, understandable labels.
+* Visualised the top 10 most important features using a bar chart.
 * **Top 10 Most Important Features Identified:**
   1. `Contract_Month-to-month` - Importance: 0.566889
   2. `OnlineSecurity_No` - Importance: 0.106041
@@ -244,25 +244,25 @@ Therefore, for this churn prediction task, the Tuned Decision Tree Classifier wi
 
 The feature importance analysis has provided critical insights into the underlying reasons for customer churn, which would directly inform business strategies:
 
-   * Dominant Driver: Contract Type (`Contract_Month-to-month`): This feature is overwhelmingly the most significant predictor of churn. Customers on month-to-month contracts exhibit minimal commitment and are highly susceptible to churn due to perceived lack of value, minor dissatisfaction, or competitive offers.
-     * Actionable insight: The top priority for retention should be to convert these customers to longer-term contracts (e.g. one- or two-years) through targeted promotions, bundled services, or loyalty programmes that highlight long-term value and benefits.
+* Dominant Driver: Contract Type (`Contract_Month-to-month`): This feature is overwhelmingly the most significant predictor of churn. Customers on month-to-month contracts exhibit minimal commitment and are highly susceptible to churn due to perceived lack of value, minor dissatisfaction, or competitive offers.
+   * Actionable insight: The top priority for retention should be to convert these customers to longer-term contracts (e.g. one- or two-years) through targeted promotions, bundled services, or loyalty programmes that highlight long-term value and benefits.
     
-   * Security and Payment Vulnerabilities (`OnlineSecurity_No`, `PaymentMethod_Electronic check`): Customers lacking online security services and those using electronic checks are significantly more prone to churn. This suggests either a feeling of vulnerability / lack of stickiness or potential friction points in their billing experience.
-     * Actionable insight: Actively promote the value and benefits of online security features by perhaps offering free trials or bundling them together. For electronic check users, investigate underlying causes of frustrations and encourage migration to more stable and convenient payment methods, such as auto-payment via credit card, with appropriate incentives.
+* Security and Payment Vulnerabilities (`OnlineSecurity_No`, `PaymentMethod_Electronic check`): Customers lacking online security services and those using electronic checks are significantly more prone to churn. This suggests either a feeling of vulnerability / lack of stickiness or potential friction points in their billing experience.
+   * Actionable insight: Actively promote the value and benefits of online security features by perhaps offering free trials or bundling them together. For electronic check users, investigate underlying causes of frustrations and encourage migration to more stable and convenient payment methods, such as auto-payment via credit card, with appropriate incentives.
 
-   * Service Engagement and Support Gaps (`StreamingMovies_Yes`, `InternetService_DSL`, `TechSupport_No`): While seemingly engaged, customers who stream movies are also at higher risk, possibly due to high expectations of service quality or competitive offerings. Conversely, those without tech support are more likely to leave, which indicates a need for reliable assistance. DSL internet service, potentially perceived as slower, also contributes to churn risk.
-     * Actionable insight: For streaming users, ensure robust internet performance and consider offering competitive streaming bundles. For customers without tech support, emphasise the availability and effectiveness of support channels for prompt addressing of issues. Evaluate DSL service quality and consider upgrade incentives.
+* Service Engagement and Support Gaps (`StreamingMovies_Yes`, `InternetService_DSL`, `TechSupport_No`): While seemingly engaged, customers who stream movies are also at higher risk, possibly due to high expectations of service quality or competitive offerings. Conversely, those without tech support are more likely to leave, which indicates a need for reliable assistance. DSL internet service, potentially perceived as slower, also contributes to churn risk.
+   * Actionable insight: For streaming users, ensure robust internet performance and consider offering competitive streaming bundles. For customers without tech support, emphasise the availability and effectiveness of support channels for prompt addressing of issues. Evaluate DSL service quality and consider upgrade incentives.
 
-   * Customer Lifecycle and Value Perception (`Contract_One year`, `tenure`, `OnlineSecurity_Yes`, `MonthlyCharges`): Features such as one-year contracts and tenure indicate that customers at different stages of their lifecycle (e.g. nearing contract end, very new, or very old) have varying churn risks. `OnlineSecurity_Yes` acts as a sticky feature, while `MonthlyCharges` still plays a role, likely when perceived value does not match cost.
-     * Actionable insight: Implement lifecycle-based retention strategies, such as proactive retention offers for one-year contracts and personalised engagement for long-term customers. Continue to highlight the value of "sticky" services such as online security. Regularly review pricing structures to ensure competitiveness and perceived value.
+* Customer Lifecycle and Value Perception (`Contract_One year`, `tenure`, `OnlineSecurity_Yes`, `MonthlyCharges`): Features such as one-year contracts and tenure indicate that customers at different stages of their lifecycle (e.g. nearing contract end, very new, or very old) have varying churn risks. `OnlineSecurity_Yes` acts as a sticky feature, while `MonthlyCharges` still plays a role, likely when perceived value does not match cost.
+   * Actionable insight: Implement lifecycle-based retention strategies, such as proactive retention offers for one-year contracts and personalised engagement for long-term customers. Continue to highlight the value of "sticky" services such as online security. Regularly review pricing structures to ensure competitiveness and perceived value.
 
 These insights provide a clear roadmap for the business to develop targeted strategies and improve customer retention.
 
 ## Phase 8: Model Deployment
 * **Objective:** Develop a simple web application (using Streamlit) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
 * **Key Activities:**
-  * Saved the completed sci-kit learn pipeline (`model_pipeline.job.lib`), which includes the fitted preprocessor (`ColumnTransformer`) and the trained Tuned Decision Tree Classifier (after SMOTE).
-  * Developed `app.py`, a Streamlit application that loads this single `model_pipeline.joblib` file, that provides a user-friendly interface for inputting customer features and receiving real-time churn predictions.
+* Saved the completed sci-kit learn pipeline (`model_pipeline.job.lib`), which includes the fitted preprocessor (`ColumnTransformer`) and the trained Tuned Decision Tree Classifier (after SMOTE).
+* Developed `app.py`, a Streamlit application that loads this single `model_pipeline.joblib` file, that provides a user-friendly interface for inputting customer features and receiving real-time churn predictions.
 
 # Next Steps (Future Work)
 
