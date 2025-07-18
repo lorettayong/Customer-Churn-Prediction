@@ -20,7 +20,6 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 - `requirements.txt`: Lists all the Python libraries and their versions required to run the project.
 - `app.py`: The Streamlit web application for interactive predictions.
 - `model_pipeline.joblib`: The saved complete scikit-learn pipeline, encapsulating the preprocessor (`ColumnTransformer` with `StandardScaler` and `OneHotEncoder`) and the trained Tuned Decision Tree Classifier (after SMOTE).
-  
 
 # How to Run the Project
 
@@ -63,16 +62,16 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
    * Navigate to the project's root directory.
    * Run `streamlit run app.py` to open the interactive churn prediction web application in the browser.
 
-## Initial Data Overview (from `churn_prediction.ipynb`)
+# Initial Data Overview (from `churn_prediction.ipynb`)
 
 * **Shape:** `(7043, 21)` - 7043 customers, 21 features
 * **Target Variable:** 'Churn' (Yes/No)
 * **Initial Churn Rate:** Approximately 26.5% of customers churned.
 * **Data Types:** Mix of numerical and categorical features. Noted a specific issue with `TotalCharges` being an object type despite containing numeric values, requiring conversion and handling of missing entries.
 
-## Project Phases
+# Project Phases
 
-### Phase 1: Initial Data Exploration and Cleaning
+## Phase 1: Initial Data Exploration and Cleaning
 * **Objective:** Load the dataset, understand its structure, identify data types, check for missing values, perform initial cleaning.
 * **Key Activities:**
   * Loaded `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
@@ -83,7 +82,7 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
   * Identified categorical and numerical features.
   * Performed basic EDA with visualisations (churn distribution, numerical feature distributions, churn vs. categorical features)
 
-### Phase 2: Data Preprocessing and Feature Engineering
+## Phase 2: Data Preprocessing and Feature Engineering
 * **Objective:** Transform raw data into a suitable format for machine learning models, including handling categorical variables and scaling numerical ones, and splitting the data for training and testing.
 * **Key Activities:**
 * Separated features (X) and target (y) variables.
@@ -95,7 +94,7 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 * Applied the `fit_transform` method on the training data and `transform` on the testing data to prevent data leakage.
 * Converted processed NumPy arrays back to Pandas DataFrames for easier inspection.
 
-### Phase 3: Model Building and Evaluation
+## Phase 3: Model Building and Evaluation
 * **Objective:** Train and evaluate multiple classification models to predict customer churn, and compare their initial performance.
 * **Key Activities:**
 * Model Selection: Implemented and evaluated three distinct classification algorithms:
@@ -112,7 +111,7 @@ The dataset used for this project is the **Telco Customer Churn dataset** that i
 * Confusion Matrix Visualisation: A Confusion Matrix was generated and visualised for each model, providing a detailed breakdown of True Positives, True Negatives, False Positives, and False Negatives.
 * Model Comparison: A summary table and bar charts were created to compare the Accuracy, Precision, Recall, and F1-Score of all three models side-by-side, offering insights into their relative strengths and weaknesses for this churn prediction task.
 
-**Model Performance Comparison**
+### Model Performance Comparison
 
 Our primary business objective is to reduce customer attrition, which fundamentally means minimising the rate at which customers discontinue their service. In this context, Recall would be the metric of high importance, since it directly measures our ability to "catch" as many actual churners as possible. Missing a customer who is about to churn (a False Negative) typically incurs a higher financial cost, in the form of lost customer lifetime value, than the cost of a potentially wasted retention effort on a customer who would not have churned (a False Positive). Therefore, while aiming for high recall, we also need to maintain a reasonable Precision to ensure our retention strategies are efficient and not overly wasteful. The F1-Score serves as an excellent composite metric, providing a balanced assessment of both Recall and Precision.
 
@@ -132,7 +131,7 @@ The Confusion Matrix for Logistic Regression further illustrates this balance:
 
 This performance profile makes Logistic Regression a practical and actionable choice for the business, enabling targeted retention strategies that effectively balance the costs of intervention with the imperative of reducing customer attrition.
 
-### Phase 4: Hyperparameter Tuning and Cross-Validation
+## Phase 4: Hyperparameter Tuning and Cross-Validation
 * **Objective:** Improve the performance of the selected models by systematically searching for optimal hyperparameters and obtaining more robust performance estimates through cross-validation.
 * **Key Activities:**
 * Defined a Stratified K-Fold Cross-Validation strategy (`n_split=5`) to ensure balanced class distribution across all folds, which is critical for imbalanced datasets such as churn.
@@ -166,7 +165,7 @@ This performance profile makes Logistic Regression a practical and actionable ch
     * F1-Score: 58.27%
 * Impact of tuning: While hyperparameter tuning generally aims for significant performance gains, the improvements across all three models were relatively modest in this case. This suggests that the initial default parameters were already quite robust, or that the inherent predictability within the dataset, given the current features and preprocessing, might be approaching its limit for these specific algorithms. The most notable change was that the Tuned Decision Tree slightly surpassed the Tuned Logistic Regression in F1-Score, indicating a more optimal configuration for balancing precision and recall for this model.
 
-**Model Performance Comparison (After Tuning)**
+### Model Performance Comparison (After Tuning)
 
 After comprehensive hyperparameter tuning and cross-validation, we re-evaluated the models to identify the most effective one for our churn prediction objective, maintaining our focus on the F1-Score as the primary metric for balancing Recall and Precision.
 
@@ -178,7 +177,7 @@ Deliving into the specific performance of the Tuned Decision Tree:
 
 While the improvements from tuning were not dramatic, the Tuned Decision Tree now offers the best balance of identifying at-risk customers (Recall) while maintaining acceptable efficiency in targeting (Precision), making it the most reliable choice for proactive customer retention strategies based on this analysis.
 
-### Phase 5: ROC Curve and AUC Analysis
+## Phase 5: ROC Curve and AUC Analysis
 * **Objective:** Gain a deeper understanding of the models' discriminatory power across all possible classification thresholds, especially given the potential class imbalance in churn data.
 * **Key Activities:**
 * Determined the predicted probabilities of the positive class (churn=1) for each tuned model (i.e. Logistic Regression, Decision Tree, and Random Forest).
@@ -192,7 +191,7 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
   - F1-Score is a threshold-dependent metric that indicates performance at a specific operating point, which is typically the default 0.5 probability threshold. The Decision Tree's slightly higher F1-Score suggests it offers the best balance of precision and recall at its default operating point.
   - On the other hand, AUC is a threshold-independent measure of the model's overall discriminatory power or its ability to rank positive instances higher than negative instances across all possible thresholds. The higher AUC for Logistic Regression indicates that it is generally better at separating the churn and non-churn classes. This means that even if its F1-Score at the default threshold was slightly lower, there might be other thresholds where Logistic Regression could achieve an even better balance of TPR and FPR, or where its overall ranking capability is superior. This further emphasises that no single metric tells the complete story, and understanding both F1-Score (for actionable performance at a specific point) and AUC (for overall discriminatory power) is crucial for robust model evaluation.
 
-### Phase 6: Addressing Class Imbalance
+## Phase 6: Addressing Class Imbalance
 * **Objective:** Improve the model's ability to correctly identify the minority class (churners) by handling class imbalance in the training data.
 * **Key Activities:**
   * Applied SMOTE (Synthetic Minority Over-sampling Technique) to the training data to create synthetic samples of the minority class (churners), thereby balancing the class distribution.
@@ -206,7 +205,7 @@ While the improvements from tuning were not dramatic, the Tuned Decision Tree no
     * AUC Score: 81.03%
   * Impact of Applying SMOTE: Applying SMOTE resulted in a significant increase in Recall for the churn class, drastically improving from 56.68% (for the Tuned Decision Tree before SMOTE) to 74.87%. This indicates the model is now much better at identifying actual churners, which aligns strongly with our business objective of minimising lost customers. However, this improvement came with a notable trade-off in Precision, which decreased from 63.10% to 49.38%. This means that the model now produces more false positives of predicting churn for customers who don't actually churn. The F1-Score, a balanced metric, saw a slight decrease from 59.72% to 59.51%. Despite the minor dip in F1-Score and the reduction in Precision, the substantial gain in Recall is considered acceptable given that the primary goal is to proactively identify and intervene with as many potential churners as possible, even if it means a higher rate of "false alarms" for retention efforts since the cost of losing a customer is typically higher than the cost of a potentially unnecessary retention offer.
 
-**Model Performance Conclusion (Final Assessment)**
+### Model Performance Conclusion (Final Assessment)
 
 After comprehensive hyperparameter tuning, cross-validation, and an attempt to address class imbalance, we conducted a final assessment to identify the most effective model for our churn prediction objective. Our primary focus remains on balancing Recall (to catch as many churners as possible) and Precision (to minimise wasted retention efforts), with the F1-Score serving as our key composite metric.
 
@@ -223,7 +222,7 @@ The application of SMOTE to the Tuned Decision Tree model yielded a significant 
 
 Therefore, for this churn prediction task, the Tuned Decision Tree Classifier with SMOTE is considered the most effective model. Its strong Recall ensures that a large proportion of at-risk customers are identified, allowing for proactive intervention, which aligns directly with the goal of reducing customer attrition. Further optimisation could involve exploring different thresholds for this model to find an even more precise balance between Precision and Recall, depending on the specific budget and impact of retention campaigns.
 
-### Phase 7: Feature Importance Analysis
+## Phase 7: Feature Importance Analysis
 * **Objective:** Understand which features (customer attributes) are most influential in the best model's predictions so as to provide valuable business insights and help in identifyin the key drivers of churn.
 * **Key Activities:**
   * Extracted feature importances from the retrained Tuned Decision Tree (after SMOTE) using the `feature_importances_` attribute.
@@ -241,7 +240,7 @@ Therefore, for this churn prediction task, the Tuned Decision Tree Classifier wi
   9. `TechSupport_No` - Importance: 0.013819
   10. `MonthlyCharges` - Importance: 0.012164
 
-**Implications for Churn and Actionable Insights**
+### Implications for Churn and Actionable Insights
 
 The feature importance analysis has provided critical insights into the underlying reasons for customer churn, which would directly inform business strategies:
 
@@ -259,13 +258,13 @@ The feature importance analysis has provided critical insights into the underlyi
 
 These insights provide a clear roadmap for the business to develop targeted strategies and improve customer retention.
 
-### Phase 8: Model Deployment
+## Phase 8: Model Deployment
 * **Objective:** Develop a simple web application (using Streamlit) to allow interactive churn predictions, demonstrating the end-to-end project lifecycle.
 * **Key Activities:**
   * Saved the completed sci-kit learn pipeline (`model_pipeline.job.lib`), which includes the fitted preprocessor (`ColumnTransformer`) and the trained Tuned Decision Tree Classifier (after SMOTE).
   * Developed `app.py`, a Streamlit application that loads this single `model_pipeline.joblib` file, that provides a user-friendly interface for inputting customer features and receiving real-time churn predictions.
 
-## Next Steps (Future Work)
+# Next Steps (Future Work)
 
 * ~~**Further Data Preprocessing:** Handle categorical features (e.g. One-Hot Encoding), scaling numerical features.~~
 * ~~**Feature Selection/Engineering:** Explore creating new features or selecting the most important ones.~~
